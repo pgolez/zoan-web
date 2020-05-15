@@ -1,0 +1,6 @@
+<template>
+  <div>Payment Page</div>
+</template>
+<script>
+export default {};
+</script>
