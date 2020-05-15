@@ -30,21 +30,15 @@
     </v-app-bar>
 
     <v-content>
-      <PaymentPage />
+      <router-link to="/payment">Go to payments</router-link>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import PaymentPage from "@/components/payment/PaymentPageComponent";
-
 export default {
   name: "App",
-
-  components: {
-    PaymentPage
-  },
-
   data: () => ({
     //
   })
