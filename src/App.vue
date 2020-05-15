@@ -1,13 +1,11 @@
 <template>
   <v-app>
-    <v-navigation-drawer app>
-      <!-- -->
-    </v-navigation-drawer>
-
     <v-app-bar app>
       <!-- -->
       v-app-bar
     </v-app-bar>
+
+    <AppNavigationDrawer />
 
     <!-- Sizes your content based upon application components -->
     <v-content>
@@ -28,8 +26,13 @@
 
 
 <script>
+import AppNavigationDrawer from "@/components/base/TheNavigationDrawer";
+
 export default {
   name: "App",
+  components: {
+    AppNavigationDrawer
+  },
   data: () => ({
     //
   })
