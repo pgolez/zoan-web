@@ -11,7 +11,9 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="form">
-          <BorrowerSelect @change="changeBorrower"/>
+          <BorrowerSelect
+            :rules="rules.borrower"
+            @change="changeBorrower"/>
           <v-text-field
             v-model="loan.amount"
             label="Amount"
@@ -70,6 +72,9 @@ export default {
   computed: {
     rules() {
       return {
+        borrower: [
+          v => !!v || 'Borrower is required'
+        ],
         amount: [
           v => !!v || 'Loan amount is required',
           v => v >= 1000 || 'Loan amount should at least be 1000.00'

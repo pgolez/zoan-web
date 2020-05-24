@@ -7,6 +7,7 @@
     item-value="id"
     item-text="name"
     :items="borrowerOptions"
+    :rules="rules"
     outlined
     @change="propagateChange">
   </v-select>
@@ -16,6 +17,12 @@
 import { BorrowerRepository } from '@/repositories/repository.js'
 
 export default {
+  props: {
+    rules: {
+      type: Array,
+      default() { return [] }
+    }
+  },
   data() {
     return {
       borrowerId: null,
