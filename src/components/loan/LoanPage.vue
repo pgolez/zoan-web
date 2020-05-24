@@ -9,7 +9,7 @@
       <v-col :cols="12">
         <v-card>
           <v-card-title>Loans</v-card-title>
-          <v-data-table :headers="headers" :items="loans" class="elevation-1">
+          <v-data-table :headers="headers" :items="activeLoans" class="elevation-1">
             <template v-slot:item.monthlyInterest="{ item }">
               <span>{{ `${item.monthlyInterest * 100}%` }}</span>
             </template>
@@ -39,6 +39,11 @@ export default {
       ],
       loans: []
     };
+  },
+  computed: {
+    activeLoans() {
+      return this.loans.filter( loan => loan.status === 'ACTIVE')
+    }
   },
   created() {
     this.fetchLoans();
