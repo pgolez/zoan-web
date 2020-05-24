@@ -15,7 +15,9 @@
             </template>
 
             <template v-slot:item.paid_amount="{ item }">
-              <v-progress-linear :value="loanProgress(item)" rounded color="red accent-4"></v-progress-linear>
+              <v-progress-linear v-if="item.status === 'ACTIVE'" :value="loanProgress(item)" rounded color="red accent-4">
+              </v-progress-linear>
+              <v-chip v-else small>{{ item.status }}</v-chip>
             </template>
           </v-data-table>
         </v-card>
@@ -32,7 +34,7 @@ export default {
     return {
       headers: [
         { text: "Borrower", sortable: true, value: "borrower.name" },
-        { text: "Date Loaned", sortable: true, value: "date_loaned" },
+        { text: "Loan Date", sortable: true, value: "date_loaned" },
         { text: "Interest", sortable: true, value: "monthlyInterest" },
         { text: "# of Installments", sortable: true, value: "installmentCount" },
         { text: "Amount", sortable: true, value: "amount" },
@@ -43,7 +45,7 @@ export default {
   },
   computed: {
     activeLoans() {
-      return this.loans.filter( loan => loan.status === 'ACTIVE')
+      return this.loans.filter( loan => ['ACTIVE', 'DRAFT'].includes(loan.status))
     }
   },
   created() {
@@ -55,6 +57,11 @@ export default {
     },
     loanProgress(loan) {
       return (loan.paid_amount / loan.amount) * 100;
+    },
+    loanStatusClassObject(loan) {
+      if(loan.status == 'ACTIVE') {
+        return 'red accent-4'
+      }
     }
   }
 };
