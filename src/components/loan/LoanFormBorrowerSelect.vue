@@ -1,10 +1,14 @@
 <template>
   <v-select
-    v-model="borrower"
+    v-model="borrowerId"
     label="Borrower"
     placeholder="Select a borrower"
+    item-id="id"
+    item-value="id"
+    item-text="name"
     :items="borrowerOptions"
-    outlined>
+    outlined
+    @change="propagateChange">
   </v-select>
 </template>
 
@@ -14,7 +18,7 @@ import { BorrowerRepository } from '@/repositories/repository.js'
 export default {
   data() {
     return {
-      borrower: {},
+      borrowerId: null,
       borrowerOptions: []
     }
   },
@@ -26,10 +30,14 @@ export default {
       const borrowers = await BorrowerRepository.list();
       this.borrowerOptions = borrowers.map( borrower => {
         return {
-          id: borrower.id,
+          value: borrower.id,
           text: borrower.name
         }
       })
+      this.borrowerOptions = borrowers
+    },
+    propagateChange() {
+      this.$emit('change', this.borrowerId)
     }
   }
 }

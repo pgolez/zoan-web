@@ -11,7 +11,7 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="form">
-          <BorrowerSelect />
+          <BorrowerSelect @change="changeBorrower"/>
           <v-text-field
             v-model="loan.amount"
             label="Amount"
@@ -26,10 +26,10 @@
             required>
           </v-text-field>
           <v-text-field
-            v-model="loan.interestRate"
+            v-model="loan.monthlyInterest"
             label="Monthly Interest Rate"
             type="number"
-            disabled
+            readonly
             outlined
             required>
           </v-text-field>
@@ -38,13 +38,14 @@
       <v-card-actions class="pb-6 pr-6">
         <v-spacer></v-spacer>
         <v-btn outlined @click="close">Cancel</v-btn>
-        <v-btn color="primary">Save</v-btn>
+        <v-btn color="primary" @click="save">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { LoanRepository } from "@/repositories/repository";
 import BorrowerSelect from './LoanFormBorrowerSelect';
 
 export default {
@@ -55,16 +56,24 @@ export default {
     return {
       dialog: false,
       loan: {
-        borrower: "",
-        amount: null,
+        borrowerId: null,
+        amount: 0,
         installmentCount: 2,
-        interestRate: 0.12,
+        monthlyInterest: 0.12,
       }
     };
   },
   methods: {
+    changeBorrower(borrowerId) {
+      this.loan.borrowerId = borrowerId
+    },
     close() {
       this.dialog = false;
+    },
+    save() {
+      alert('save mee')
+      LoanRepository.create(this.loan)
+      console.log('LOAN', this.loan);
     }
   }
 }
