@@ -42,7 +42,7 @@
       </v-card-text>
       <v-card-actions class="pb-6 pr-6">
         <v-spacer></v-spacer>
-        <v-btn outlined @click="close">Cancel</v-btn>
+        <v-btn outlined @click="cancel">Cancel</v-btn>
         <v-btn color="primary" @click="save">Save</v-btn>
       </v-card-actions>
     </v-card>
@@ -92,9 +92,11 @@ export default {
       this.loan.borrowerId = borrowerId
     },
     resetData() {
+      this.$refs.form.reset()
+
       this.loan = {
         borrowerId: null,
-        amount: 0,
+        amount: 1000,
         installmentCount: 2,
         monthlyInterest: 0.12,
       }
