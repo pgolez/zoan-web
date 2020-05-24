@@ -52,12 +52,7 @@
                           v-model="loan.interestRate"
                           label="Monthly Interest Rate"
                           type="number"
-                          outlined
-                          required>
-                         </v-text-field>
-                        <v-text-field
-                          v-model="loan.fund"
-                          label="Fund Source"
+                          disabled
                           outlined
                           required>
                          </v-text-field>
@@ -114,7 +109,6 @@ export default {
         amount: null,
         installmentCount: 2,
         interestRate: 0.12,
-        fund: ""
       }
     };
   },
