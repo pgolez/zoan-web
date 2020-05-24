@@ -16,4 +16,9 @@ export default new class {
         return data;
     }
 
+    async post(url, requestBody) {
+        const { data } = await this.client.post(url, requestBody);
+        return data;
+    }
+
 }
