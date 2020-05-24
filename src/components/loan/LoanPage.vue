@@ -9,13 +9,12 @@
       <v-col :cols="12">
         <v-card>
           <v-card-title>Loans</v-card-title>
-          <v-data-table :headers="headers" :items="activeLoans" class="elevation-1">
+          <v-data-table :headers="headers" :items="draftLoans" class="elevation-1">
 
            <template v-slot:top>
             <v-toolbar flat color="white">
               <v-spacer></v-spacer>
               <CreateLoanModal @loan-created="appendLoan" />
-
             </v-toolbar>
 
           </template>
@@ -23,10 +22,18 @@
               <span>{{ `${item.monthlyInterest * 100}%` }}</span>
             </template>
 
+            <template v-slot:item.amount="{ item }">
+              <span>{{ item.amount }}</span>
+            </template>
+
             <template v-slot:item.paid_amount="{ item }">
               <v-progress-linear v-if="item.status === 'ACTIVE'" :value="loanProgress(item)" rounded color="red accent-4">
               </v-progress-linear>
               <v-chip v-else small>{{ item.status }}</v-chip>
+            </template>
+
+            <template v-slot:item.options>
+              <ActivateLoanModal />
             </template>
           </v-data-table>
         </v-card>
@@ -37,11 +44,13 @@
 
 <script>
 import CreateLoanModal from './CreateLoanModal';
+import ActivateLoanModal from './ActivateLoanModal';
 import { LoanRepository } from "@/repositories/repository";
 
 export default {
   components: {
-    CreateLoanModal
+    CreateLoanModal,
+    ActivateLoanModal
   },
   data() {
     return {
@@ -51,7 +60,8 @@ export default {
         { text: "Interest", sortable: true, value: "monthlyInterest" },
         { text: "# of Installments", sortable: true, value: "installmentCount" },
         { text: "Amount", sortable: true, value: "amount" },
-        { text: "Status", sortable: true, value: "paid_amount" }
+        { text: "Status", sortable: true, value: "paid_amount" },
+        { text: "Options", value: 'options'}
       ],
       loans: [],
       loan: {
@@ -63,8 +73,8 @@ export default {
     };
   },
   computed: {
-    activeLoans() {
-      return this.loans.filter( loan => ['ACTIVE', 'DRAFT'].includes(loan.status))
+    draftLoans() {
+      return this.loans.filter( loan => loan.status === 'DRAFT')
     }
   },
   created() {

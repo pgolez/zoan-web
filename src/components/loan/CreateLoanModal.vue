@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500px">
+  <v-dialog v-model="dialog" persistent max-width="500px">
     <template v-slot:activator="{ on }">
       <v-btn color="primary" dark class="mb-2" v-on="on">
         Draft a new loan
@@ -11,33 +11,35 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="form">
-          <BorrowerSelect
-            :rules="rules.borrower"
-            @change="changeBorrower"/>
-          <v-text-field
-            v-model="loan.amount"
-            label="Amount"
-            type="number"
-            :rules="rules.amount"
-            outlined
-            required>
-          </v-text-field>
-          <v-text-field
-            v-model="loan.installmentCount"
-            label="Number of Installments"
-            type="number"
-            :rules="rules.installmentCount"
-            outlined
-            required>
-          </v-text-field>
-          <v-text-field
-            v-model="loan.monthlyInterest"
-            label="Monthly Interest Rate"
-            type="number"
-            readonly
-            outlined
-            required>
-          </v-text-field>
+          <v-container>
+            <BorrowerSelect
+              :rules="rules.borrower"
+              @change="changeBorrower"/>
+            <v-text-field
+              v-model="loan.amount"
+              label="Amount"
+              type="number"
+              :rules="rules.amount"
+              outlined
+              required>
+            </v-text-field>
+            <v-text-field
+              v-model="loan.installmentCount"
+              label="Number of Installments"
+              type="number"
+              :rules="rules.installmentCount"
+              outlined
+              required>
+            </v-text-field>
+            <v-text-field
+              v-model="loan.monthlyInterest"
+              label="Monthly Interest Rate"
+              type="number"
+              readonly
+              outlined
+              required>
+            </v-text-field>
+          </v-container>
         </v-form>
       </v-card-text>
       <v-card-actions class="pb-6 pr-6">
