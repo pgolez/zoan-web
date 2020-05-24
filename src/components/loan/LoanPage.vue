@@ -34,6 +34,7 @@ export default {
         { text: "Borrower", sortable: true, value: "borrower.name" },
         { text: "Date Loaned", sortable: true, value: "date_loaned" },
         { text: "Interest", sortable: true, value: "monthlyInterest" },
+        { text: "# of Installments", sortable: true, value: "installmentCount" },
         { text: "Amount", sortable: true, value: "amount" },
         { text: "Status", sortable: true, value: "paid_amount" }
       ],
