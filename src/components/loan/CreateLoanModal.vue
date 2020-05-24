@@ -10,11 +10,13 @@
         <span class="headline">New Loan</span>
       </v-card-title>
       <v-card-text>
-        <v-form ref="form" @submit.prevent="save">
+        <v-form ref="form">
           <BorrowerSelect @change="changeBorrower"/>
           <v-text-field
             v-model="loan.amount"
             label="Amount"
+            type="number"
+            :rules="rules.amount"
             outlined
             required>
           </v-text-field>
@@ -54,14 +56,25 @@ export default {
   },
   data() {
     return {
+      valid: true,
       dialog: false,
       loan: {
         borrowerId: null,
-        amount: 0,
+        amount: 1000,
         installmentCount: 2,
         monthlyInterest: 0.12,
       }
     };
+  },
+  computed: {
+    rules() {
+      return {
+        amount: [
+          amt => !!amt || 'Loan amount is required',
+          amt => amt >= 1000 || 'Loan amount should at least be 1000.00'
+        ]
+      }
+    }
   },
   methods: {
     changeBorrower(borrowerId) {
