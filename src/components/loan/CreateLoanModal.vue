@@ -24,6 +24,7 @@
             v-model="loan.installmentCount"
             label="Number of Installments"
             type="number"
+            :rules="rules.installmentCount"
             outlined
             required>
           </v-text-field>
@@ -70,8 +71,13 @@ export default {
     rules() {
       return {
         amount: [
-          amt => !!amt || 'Loan amount is required',
-          amt => amt >= 1000 || 'Loan amount should at least be 1000.00'
+          v => !!v || 'Loan amount is required',
+          v => v >= 1000 || 'Loan amount should at least be 1000.00'
+        ],
+        installmentCount: [
+          v => !!v || 'Installment amount is required',
+          v => Number.isInteger(Number(v)) || 'Installment count should be a whole number',
+          v => v > 0 || 'Installment should be done at least once'
         ]
       }
     }
