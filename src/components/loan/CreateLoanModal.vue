@@ -109,10 +109,12 @@ export default {
       this.close()
     },
     async save() {
-      const savedLoan = await LoanRepository.create(this.loan)
-      this.resetData()
-      this.close()
-      this.$emit('loan-created', savedLoan)
+      if(this.$refs.form.validate()) {
+        const savedLoan = await LoanRepository.create(this.loan)
+        this.resetData()
+        this.close()
+        this.$emit('loan-created', savedLoan)
+      }
     }
   }
 }
