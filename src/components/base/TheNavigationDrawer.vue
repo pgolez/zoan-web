@@ -25,7 +25,7 @@ export default {
           icon: "mdi-folder",
           route: "loan-page"
         },
-        { name: "Starred", icon: "mdi-star", route: "/" }
+        { name: "Starred", icon: "mdi-star", route: "payment-page" }
       ]
     };
   }
