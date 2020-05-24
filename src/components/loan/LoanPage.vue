@@ -33,12 +33,8 @@
                   </v-card-title>
                   <v-card-text>
                     <v-form ref="form">
-                      <v-text-field
-                        v-model="loan.borrower"
-                        label="Borrower"
-                        outlined
-                        required>
-                       </v-text-field>
+
+                      <BorrowerSelect />
                         <v-text-field
                           v-model="loan.amount"
                           label="Amount"
@@ -94,9 +90,13 @@
 </template>
 
 <script>
+import BorrowerSelect from './LoanFormBorrowerSelect';
 import LoanRepository from "@/repositories/loan.repository";
 
 export default {
+  components: {
+    BorrowerSelect
+  },
   data() {
     return {
       headers: [
