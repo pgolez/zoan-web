@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import BorrowerRepository from '@/repositories/borrower.repository.js'
+import { BorrowerRepository } from '@/repositories/repository.js'
 
 export default {
   data() {
@@ -18,15 +18,19 @@ export default {
       borrowerOptions: []
     }
   },
-  async created() {
-    const borrowers = await BorrowerRepository.list();
-    this.borrowerOptions = borrowers.map( borrower => {
-      return {
-        id: borrower.id,
-        text: borrower.name
-      }
-    })
-    console.table(borrowers);
+  created() {
+    this.populateBorrowerOptions()
+  },
+  methods: {
+    async populateBorrowerOptions() {
+      const borrowers = await BorrowerRepository.list();
+      this.borrowerOptions = borrowers.map( borrower => {
+        return {
+          id: borrower.id,
+          text: borrower.name
+        }
+      })
+    }
   }
 }
 </script>

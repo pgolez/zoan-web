@@ -91,7 +91,7 @@
 
 <script>
 import BorrowerSelect from './LoanFormBorrowerSelect';
-import LoanRepository from "@/repositories/loan.repository";
+import { LoanRepository } from "@/repositories/repository";
 
 export default {
   components: {
