@@ -10,7 +10,7 @@
         <span class="headline">New Loan</span>
       </v-card-title>
       <v-card-text>
-        <v-form ref="form">
+        <v-form ref="form" @submit.prevent="save">
           <BorrowerSelect @change="changeBorrower"/>
           <v-text-field
             v-model="loan.amount"
@@ -67,13 +67,26 @@ export default {
     changeBorrower(borrowerId) {
       this.loan.borrowerId = borrowerId
     },
+    resetData() {
+      this.loan = {
+        borrowerId: null,
+        amount: 0,
+        installmentCount: 2,
+        monthlyInterest: 0.12,
+      }
+    },
     close() {
       this.dialog = false;
     },
-    save() {
-      alert('save mee')
-      LoanRepository.create(this.loan)
-      console.log('LOAN', this.loan);
+    cancel() {
+      this.resetData()
+      this.close()
+    },
+    async save() {
+      const savedLoan = await LoanRepository.create(this.loan)
+      this.resetData()
+      this.close()
+      this.$emit('loan-created', savedLoan)
     }
   }
 }

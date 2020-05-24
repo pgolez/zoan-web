@@ -16,8 +16,8 @@ export default {
             installmentCount: loan.installmentCount,
             monthlyInterest: loan.monthlyInterest
         }
-        await client.post(BASE_URL, data)
-        return loan
+        const savedLoan = await client.post(BASE_URL, data)
+        return savedLoan
     }
 
 };

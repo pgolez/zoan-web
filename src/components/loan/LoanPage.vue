@@ -14,7 +14,7 @@
            <template v-slot:top>
             <v-toolbar flat color="white">
               <v-spacer></v-spacer>
-              <CreateLoanModal />
+              <CreateLoanModal @loan-created="appendLoan" />
 
             </v-toolbar>
 
@@ -81,6 +81,9 @@ export default {
       if(loan.status == 'ACTIVE') {
         return 'red accent-4'
       }
+    },
+    appendLoan(loan) {
+      this.loans.push(loan)
     }
   }
 };
