@@ -16,14 +16,14 @@
         <v-card-text>
           <v-form ref="form">
             <v-container>
-              <FundSelect></FundSelect>
+              <FundSelect @change="changeFund"></FundSelect>
             </v-container>
           </v-form>
         </v-card-text>
       <v-card-actions class="pb-6 pr-6">
           <v-spacer></v-spacer>
-          <v-btn outlined text @click="dialog = false">Cancel</v-btn>
-          <v-btn color="primary" @click="dialog = false">Activate</v-btn>
+          <v-btn outlined text @click="cancel">Cancel</v-btn>
+          <v-btn color="primary" @click="activateLoan">Activate</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -42,7 +42,26 @@ export default {
   },
   data() {
     return {
-      dialog: false
+      dialog: false,
+      fundId: null
+    }
+  },
+  methods: {
+    changeFund(id) {
+      this.fundId = id
+    },
+    resetData() {
+      this.fundId = null
+    },
+    close() {
+      this.resetData();
+      this.dialog = false;
+    },
+    cancel() {
+      this.close()
+    },
+    async activateLoan() {
+      // TODO implementation
     }
   }
 }

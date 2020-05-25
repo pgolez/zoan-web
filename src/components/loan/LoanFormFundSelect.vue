@@ -1,9 +1,12 @@
 <template>
   <v-select
-    v-model="fund"
+    v-model="fundId"
     label="Fund Source"
     placeholder="Select a fund source"
+    item-value="id"
+    item-text="text"
     :items="fundOptions"
+    @change="propagateChange"
     outlined>
   </v-select>
 </template>
@@ -14,7 +17,7 @@ import { FundRepository } from '@/repositories/repository.js'
 export default {
   data() {
     return {
-      fund: {},
+      fundId: null,
       fundOptions: []
     }
   },
@@ -33,6 +36,9 @@ export default {
           text: `${fund.id} (${fund.totalAmount})`
         }
       })
+    },
+    propagateChange() {
+      this.$emit('change', this.fundId)
     }
   }
 }
