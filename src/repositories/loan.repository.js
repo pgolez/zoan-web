@@ -30,5 +30,10 @@ export default {
         }
         const updatedLoan = await client.put(`${BASE_URL}/${loan.id}`, data)
         return updatedLoan
+    },
+
+    async activate(loan) {
+        const activatedLoan = await client.post(`${BASE_URL}/${loan.id}/activate`)
+        return activatedLoan
     }
 };

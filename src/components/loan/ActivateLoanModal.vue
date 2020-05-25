@@ -71,6 +71,9 @@ export default {
         fundId: this.fundId
       }
       const loan = await LoanRepository.update(data)
+      const activatedLoan = await LoanRepository.activate(loan)
+      // propagate event
+      this.close();
     }
   }
 }
