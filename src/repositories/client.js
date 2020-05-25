@@ -21,4 +21,9 @@ export default new class {
         return data;
     }
 
+    async put(url, requestBody) {
+        const { data } = await this.client.put(url, requestBody);
+        return data;
+    }
+
 }
