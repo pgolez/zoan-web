@@ -16,10 +16,7 @@
         <v-card-text>
           <v-form ref="form">
             <v-container>
-              <v-text-field
-                label="Fund Source"
-                outlined>
-              </v-text-field>
+              <FundSelect></FundSelect>
             </v-container>
           </v-form>
         </v-card-text>
@@ -34,7 +31,12 @@
 </template>
 
 <script>
+import FundSelect from './LoanFormFundSelect'
+
 export default {
+  components: {
+    FundSelect
+  },
   props: {
     loan: {}
   },

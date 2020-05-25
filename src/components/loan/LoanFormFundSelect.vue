@@ -24,8 +24,10 @@ export default {
   methods: {
     async populateFundOptions() {
       const funds = await FundRepository.list();
-      const availableFunds = funds.select
-      this.fundOptions = funds.map( fund => {
+      const availableFunds = funds.filter( fund => {
+        return fund.status === 'FREE'
+      })
+      this.fundOptions = availableFunds.map( fund => {
         return {
           id: fund.id,
           text: `${fund.id} (${fund.totalAmount})`
