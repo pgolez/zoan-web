@@ -34,9 +34,14 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      dialog: false,
-    }),
+export default {
+  props: {
+    loan: {}
+  },
+  data() {
+    return {
+      dialog: false
+    }
   }
+}
 </script>

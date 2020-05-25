@@ -32,8 +32,8 @@
               <v-chip v-else small>{{ item.status }}</v-chip>
             </template>
 
-            <template v-slot:item.options>
-              <ActivateLoanModal />
+            <template v-slot:item.options="{ item }">
+              <ActivateLoanModal :loan="item" />
             </template>
           </v-data-table>
         </v-card>
@@ -69,7 +69,8 @@ export default {
         amount: null,
         installmentCount: 2,
         interestRate: 0.12,
-      }
+      },
+      activateDialog: false
     };
   },
   computed: {
