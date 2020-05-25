@@ -72,7 +72,7 @@ export default {
       }
       const loan = await LoanRepository.update(data)
       const activatedLoan = await LoanRepository.activate(loan)
-      // propagate event
+      this.$emit('loan-activated', activatedLoan)
       this.close();
     }
   }

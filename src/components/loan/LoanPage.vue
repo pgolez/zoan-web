@@ -27,13 +27,20 @@
             </template>
 
             <template v-slot:item.paid_amount="{ item }">
-              <v-progress-linear v-if="item.status === 'ACTIVE'" :value="loanProgress(item)" rounded color="red accent-4">
+              <v-progress-linear
+                v-if="item.status === 'ACTIVE'"
+                :value="loanProgress(item)"
+                rounded color="red accent-4">
               </v-progress-linear>
-              <v-chip v-else small>{{ item.status }}</v-chip>
+              <v-chip
+                v-else
+                small>
+                {{ item.status }}
+              </v-chip>
             </template>
 
             <template v-slot:item.options="{ item }">
-              <ActivateLoanModal :loan="item" />
+              <ActivateLoanModal :loan="item" @loan-activated="updateLoan" />
             </template>
           </v-data-table>
         </v-card>
@@ -95,6 +102,16 @@ export default {
     },
     appendLoan(loan) {
       this.loans.push(loan)
+    },
+    updateLoan(activatedLoan) {
+      const targetLoan = this.loans.find(e => { return e.id === activatedLoan.id });
+
+      targetLoan.borrower = activatedLoan.borrower
+      targetLoan.amount = activatedLoan.amount
+      targetLoan.installmentCount= activatedLoan.installmentCount
+      targetLoan.monthlyInterest= activatedLoan.monthlyInterest
+      targetLoan.fund = activatedLoan.fund
+      targetLoan.status = activatedLoan.status
     }
   }
 };
