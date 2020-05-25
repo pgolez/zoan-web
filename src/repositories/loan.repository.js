@@ -5,7 +5,7 @@ const BASE_URL = '/api/loans'
 export default {
 
     async list() {
-        const loans = await client.get('/api/loans');
+        const loans = await client.get(BASE_URL);
         return loans;
     },
 
@@ -18,6 +18,17 @@ export default {
         }
         const savedLoan = await client.post(BASE_URL, data)
         return savedLoan
-    }
+    },
 
+    async update(loan) {
+        const data = {
+            amount: loan.amount,
+            borrowerId: loan.borrowerId,
+            installmentCount: loan.installmentCount,
+            monthlyInterest: loan.monthlyInterest,
+            fundId: loan.fundId
+        }
+        const updatedLoan = await client.put(`${BASE_URL}/${loan.id}`, data)
+        return updatedLoan
+    }
 };

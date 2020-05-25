@@ -32,6 +32,7 @@
 
 <script>
 import FundSelect from './LoanFormFundSelect'
+import { LoanRepository } from '@/repositories/repository'
 
 export default {
   components: {
@@ -61,7 +62,15 @@ export default {
       this.close()
     },
     async activateLoan() {
-      // TODO implementation
+      const data = {
+        id: this.loan.id,
+        borrowerId: this.loan.borrower.id,
+        amount: this.loan.amount,
+        monthlyInterest: this.loan.monthlyInterest,
+        installmentCount: this.loan.installmentCount,
+        fundId: this.fundId
+      }
+      const loan = await LoanRepository.update(data)
     }
   }
 }
