@@ -26,8 +26,8 @@
               <span>{{ item.dateCreated|formatDate }}</span>
             </template>
 
-            <template v-slot:item.amount="{ item }">
-              <span>{{ item.amount }}</span>
+            <template v-slot:item.amount="{ item }" class="text-right">
+              <span>{{ item.amount|formatCurrency(2) }}</span>
             </template>
 
             <template v-slot:item.paid_amount="{ item }">
