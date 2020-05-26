@@ -22,6 +22,10 @@
               <span>{{ `${item.monthlyInterest * 100}%` }}</span>
             </template>
 
+            <template v-slot:item.dateCreated="{ item}">
+              <span>{{ item.dateCreated|formatDate }}</span>
+            </template>
+
             <template v-slot:item.amount="{ item }">
               <span>{{ item.amount }}</span>
             </template>
@@ -63,7 +67,7 @@ export default {
     return {
       headers: [
         { text: "Borrower", sortable: true, value: "borrower.name" },
-        { text: "Loan Date", sortable: true, value: "date_loaned" },
+        { text: "Loan Date", sortable: true, value: "dateCreated" },
         { text: "Interest", sortable: true, value: "monthlyInterest" },
         { text: "# of Installments", sortable: true, value: "installmentCount" },
         { text: "Amount", sortable: true, value: "amount" },
