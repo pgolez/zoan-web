@@ -1,37 +1,37 @@
 <template>
-        <v-card>
-          <v-card-title>Active Loans</v-card-title>
-          <v-data-table
-            :headers="headers"
-            :items="loans"
-            class="elevation-1">
+  <v-card>
+    <v-card-title>Active Loans</v-card-title>
+    <v-data-table
+      :headers="headers"
+      :items="loans"
+      class="elevation-1">
 
-            <template v-slot:item.monthlyInterest="{ item }">
-              <span>{{ `${item.monthlyInterest * 100}%` }}</span>
-            </template>
+      <template v-slot:item.monthlyInterest="{ item }">
+        <span>{{ `${item.monthlyInterest * 100}%` }}</span>
+      </template>
 
-            <template v-slot:item.dateCreated="{ item }">
-              <span>{{ item.dateCreated|formatDate }}</span>
-            </template>
+      <template v-slot:item.dateCreated="{ item }">
+        <span>{{ item.dateCreated|formatDate }}</span>
+      </template>
 
-            <template v-slot:item.amount="{ item }">
-              <span class="text-right">{{ item.amount|formatCurrency(2) }}</span>
-            </template>
+      <template v-slot:item.amount="{ item }">
+        <span class="text-right">{{ item.amount|formatCurrency(2) }}</span>
+      </template>
 
-            <template v-slot:item.paid_amount="{ item }">
-              <v-progress-linear
-                :value="loanProgress(item)"
-                rounded color="red accent-4">
-              </v-progress-linear>
-            </template>
+      <template v-slot:item.paid_amount="{ item }">
+        <v-progress-linear
+          :value="loanProgress(item)"
+          rounded color="red accent-4">
+        </v-progress-linear>
+      </template>
 
-            <template v-slot:item.installmentPayable="{ item }">
-              <span>
-                {{ computeInstallmentPayable(item)|formatCurrency(2) }}
-              </span>
-            </template>
-          </v-data-table>
-        </v-card>
+      <template v-slot:item.installmentPayable="{ item }">
+        <span>
+          {{ computeInstallmentPayable(item)|formatCurrency(2) }}
+        </span>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 
 

@@ -10,8 +10,6 @@
     <!-- Sizes your content based upon application components -->
     <v-content>
       <!-- Provides the application the proper gutter -->
-      <router-link to="/payment">Go to payments</router-link>
-
       <v-container fluid>
         <!-- If using vue-router -->
         <router-view></router-view>
