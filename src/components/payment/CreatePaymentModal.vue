@@ -11,7 +11,8 @@
       <v-card-text>
         <v-form ref="form">
           <v-container>
-            <v-text-field v-model="payment.payer" label="Payer" :rules="[]" outlined required></v-text-field>
+            <PayerSelect @change="changePayer" />
+
             <v-text-field
               v-model="payment.amount"
               label="Amount"
@@ -38,16 +39,24 @@
 </template>
 
 <script>
+import PayerSelect from "@/components/loan/LoanFormBorrowerSelect";
+
 export default {
+  components: { PayerSelect },
   data() {
     return {
       showDialog: false,
       payment: {
-        payer: "",
+        payerId: null,
         amount: 0.0,
         transactionDate: "May 31, 2020"
       }
     };
+  },
+  methods: {
+    changePayer(payerId) {
+      this.payment.payerId = payerId;
+    }
   }
 };
 </script>
