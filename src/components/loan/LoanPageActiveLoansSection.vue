@@ -1,35 +1,28 @@
 <template>
         <v-card>
-          <v-card-title>Draft Loans</v-card-title>
+          <v-card-title>Active Loans</v-card-title>
           <v-data-table
             :headers="headers"
             :items="loans"
             class="elevation-1">
 
-           <template v-slot:top>
-              <v-toolbar flat color="white">
-                <v-spacer></v-spacer>
-                <CreateLoanModal
-                  @loan-created="propagateLoanCreated"/>
-              </v-toolbar>
-            </template>
-
             <template v-slot:item.monthlyInterest="{ item }">
               <span>{{ `${item.monthlyInterest * 100}%` }}</span>
             </template>
 
-            <template v-slot:item.dateCreated="{ item}">
+            <template v-slot:item.dateCreated="{ item }">
               <span>{{ item.dateCreated|formatDate }}</span>
             </template>
 
-            <template v-slot:item.amount="{ item }" class="text-right">
-              <span>{{ item.amount|formatCurrency(2) }}</span>
+            <template v-slot:item.amount="{ item }">
+              <span class="text-right">{{ item.amount|formatCurrency(2) }}</span>
             </template>
 
             <template v-slot:item.paid_amount="{ item }">
-              <v-chip small>
-                {{ item.status }}
-              </v-chip>
+              <v-progress-linear
+                :value="loanProgress(item)"
+                rounded color="red accent-4">
+              </v-progress-linear>
             </template>
 
             <template v-slot:item.installmentPayable="{ item }">
@@ -37,27 +30,13 @@
                 {{ computeInstallmentPayable(item)|formatCurrency(2) }}
               </span>
             </template>
-
-            <template v-slot:item.options="{ item }">
-              <ActivateLoanModal
-                :loan="item"
-                @loan-activated="propagateLoanActivated"/>
-            </template>
-
           </v-data-table>
         </v-card>
 </template>
 
 
 <script>
-import CreateLoanModal from './CreateLoanModal';
-import ActivateLoanModal from './ActivateLoanModal';
-
 export default {
-  components: {
-    CreateLoanModal,
-    ActivateLoanModal
-  },
   props: {
     loans: {
       type: Array,
@@ -68,13 +47,11 @@ export default {
     return {
       headers: [
         { text: "Borrower", sortable: true, value: "borrower.name" },
-        { text: "Amount", sortable: true, value: "amount" },
-        { text: "Interest", sortable: true, value: "monthlyInterest" },
+        { text: "Loan Amount", sortable: true, value: "amount" },
+        { text: "Loan Date", sortable: true, value: "dateCreated" },
         { text: "# of Installments", sortable: true, value: "installmentCount" },
         { text: "Installment Payable", sortable: true, value: "installmentPayable" },
-        { text: "Loan Date", sortable: true, value: "dateCreated" },
         { text: "Status", sortable: true, value: "paid_amount" },
-        { text: "Options", value: 'options'}
       ]
     };
   },

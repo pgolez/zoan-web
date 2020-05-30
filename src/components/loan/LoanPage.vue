@@ -13,16 +13,24 @@
           @loan-activated="updateLoan"/>
       </v-col>
     </v-row>
+    <v-row dense>
+      <v-col :cols="12">
+        <ActiveLoansSection
+          :loans="activeLoans"/>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 import DraftLoansSection from './LoanPageDraftLoansSection';
+import ActiveLoansSection from './LoanPageActiveLoansSection';
 import { LoanRepository } from "@/repositories/repository";
 
 export default {
   components: {
-    DraftLoansSection
+    DraftLoansSection,
+    ActiveLoansSection
   },
   data() {
     return {
@@ -32,6 +40,9 @@ export default {
   computed: {
     draftLoans() {
       return this.loans.filter( loan => loan.status === 'DRAFT')
+    },
+    activeLoans() {
+      return this.loans.filter( loan => loan.status === 'ACTIVE')
     }
   },
   created() {
