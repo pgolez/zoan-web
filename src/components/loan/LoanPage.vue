@@ -7,89 +7,26 @@
     </v-row>
     <v-row dense>
       <v-col :cols="12">
-        <v-card>
-          <v-card-title>Loans</v-card-title>
-          <v-data-table :headers="headers" :items="draftLoans" class="elevation-1">
-
-           <template v-slot:top>
-            <v-toolbar flat color="white">
-              <v-spacer></v-spacer>
-              <CreateLoanModal @loan-created="appendLoan" />
-            </v-toolbar>
-
-          </template>
-            <template v-slot:item.monthlyInterest="{ item }">
-              <span>{{ `${item.monthlyInterest * 100}%` }}</span>
-            </template>
-
-            <template v-slot:item.dateCreated="{ item}">
-              <span>{{ item.dateCreated|formatDate }}</span>
-            </template>
-
-            <template v-slot:item.amount="{ item }" class="text-right">
-              <span>{{ item.amount|formatCurrency(2) }}</span>
-            </template>
-
-            <template v-slot:item.paid_amount="{ item }">
-              <v-progress-linear
-                v-if="item.status === 'ACTIVE'"
-                :value="loanProgress(item)"
-                rounded color="red accent-4">
-              </v-progress-linear>
-              <v-chip
-                v-else
-                small>
-                {{ item.status }}
-              </v-chip>
-            </template>
-
-            <template v-slot:item.installmentPayable="{ item }">
-              <span>
-                {{ computeInstallmentPayable(item)|formatCurrency(2) }}
-              </span>
-            </template>
-
-            <template v-slot:item.options="{ item }">
-              <ActivateLoanModal :loan="item" @loan-activated="updateLoan" />
-            </template>
-
-          </v-data-table>
-        </v-card>
+        <DraftLoansSection
+          :loans="draftLoans"
+          @loan-created="appendLoan"
+          @loan-activated="updateLoan"/>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import CreateLoanModal from './CreateLoanModal';
-import ActivateLoanModal from './ActivateLoanModal';
+import DraftLoansSection from './LoanPageDraftLoansSection';
 import { LoanRepository } from "@/repositories/repository";
 
 export default {
   components: {
-    CreateLoanModal,
-    ActivateLoanModal
+    DraftLoansSection
   },
   data() {
     return {
-      headers: [
-        { text: "Borrower", sortable: true, value: "borrower.name" },
-        { text: "Amount", sortable: true, value: "amount" },
-        { text: "Interest", sortable: true, value: "monthlyInterest" },
-        { text: "# of Installments", sortable: true, value: "installmentCount" },
-        { text: "Installment Payable", sortable: true, value: "installmentPayable" },
-        { text: "Loan Date", sortable: true, value: "dateCreated" },
-        { text: "Status", sortable: true, value: "paid_amount" },
-        { text: "Options", value: 'options'}
-      ],
-      loans: [],
-      loan: {
-        borrower: "",
-        amount: null,
-        installmentCount: 2,
-        interestRate: 0.12,
-      },
-      activateDialog: false
+      loans: []
     };
   },
   computed: {
@@ -103,18 +40,6 @@ export default {
   methods: {
     async fetchLoans() {
       this.loans = await LoanRepository.list();
-    },
-    computeInstallmentPayable(loan) {
-      const totalPayable = loan.amount * (1 + (loan.monthlyInterest * loan.installmentCount/2))
-      return totalPayable / loan.installmentCount
-    },
-    loanProgress(loan) {
-      return (loan.paid_amount / loan.amount) * 100;
-    },
-    loanStatusClassObject(loan) {
-      if(loan.status == 'ACTIVE') {
-        return 'red accent-4'
-      }
     },
     appendLoan(loan) {
       this.loans.push(loan)
