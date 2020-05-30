@@ -3,7 +3,29 @@
     <v-card-title>Payments</v-card-title>
     <v-data-table
       :headers="headers"
+      :items="payments"
       class="elevation-1">
+
+      <template v-slot:item.transactionDate="{ item }">
+        <span>{{ item.transactionDate|formatDate }}</span>
+      </template>
+
+      <template v-slot:item.loan="{ item }">
+        <v-chip v-if="item.loan.status === 'COMPLETE'" color="green" text-color="white">
+		      <v-avatar left>
+		        <v-icon>mdi-checkbox-marked-circle</v-icon>
+		      </v-avatar>
+          {{ loanText(item.loan) }}
+        </v-chip>
+
+        <v-chip v-else color="red" texts-color="white" outlined>
+		      <v-avatar left>
+            <v-icon left>mdi-label</v-icon>
+		      </v-avatar>
+          {{ loanText(item.loan) }}
+        </v-chip>
+      </template>
+
     </v-data-table>
   </v-card>
 </template>
@@ -12,7 +34,7 @@
 <script>
 export default {
   props: {
-    loans: {
+    payments: {
       type: Array,
       required: true
     }
@@ -20,15 +42,19 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Transaction Date", sortable: true, value: "borrower.name" },
-        { text: "Loan Amount", sortable: true, value: "amount" },
-        { text: "Loan Date", sortable: true, value: "dateCreated" },
-        { text: "# of Installments", sortable: true, value: "installmentCount" },
-        { text: "Installment Payable", sortable: true, value: "installmentPayable" },
-        { text: "Status", sortable: true, value: "paid_amount" },
+        { text: "Transaction Date", sortable: true, value: "transactionDate" },
+        { text: "Payer", sortable: true, value: "payer.name" },
+        { text: "Amount Paid", sortable: true, value: "amount" },
+        { text: "Loan", sortable: true, value: "loan" }
       ]
     };
   },
-  methods: {}
+  methods: {
+    loanText(loan) {
+      const loanId = String(loan.id).padStart(5, '0')
+      const fundName = loan.loaners.join(',')
+      return `${loanId} (${fundName})`
+    }
+  }
 };
 </script>

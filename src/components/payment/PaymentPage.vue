@@ -7,23 +7,32 @@
     </v-row>
     <v-row dense>
       <v-col :cols="12">
-        <PaymentsTable />
-      </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col :cols="12">
-        <ActiveLoansSection
-          :loans="activeLoans"/>
+        <PaymentsTable
+          :payments= "payments"/>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
 import PaymentsTable from './PaymentPageTable'
+import { PaymentRepository } from "@/repositories/repository";
 
 export default {
   components: {
     PaymentsTable
+  },
+  data() {
+    return  {
+      payments: []
+    }
+  },
+  created() {
+    this.fetchPayments()
+  },
+  methods: {
+    async fetchPayments() {
+      this.payments = await PaymentRepository.list()
+    }
   }
 };
 </script>
