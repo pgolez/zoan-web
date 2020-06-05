@@ -1,7 +1,7 @@
 import moment from 'moment'
 
-export default function(value) {
+export default function(value, format = 'MMMM D, YYYY') {
     if (value) {
-        return moment(String(value)).format('MMMM D, YYYY')
+        return moment(String(value)).format(format)
     }
 }

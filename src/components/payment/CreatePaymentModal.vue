@@ -12,7 +12,7 @@
         <v-form ref="form">
           <v-container>
 
-            <LoanSelect />
+            <LoanSelect @change="changeLoan"/>
 
             <v-text-field
               v-model="payment.amount"
@@ -52,13 +52,16 @@ export default {
     return {
       showDialog: false,
       payment: {
-        loanId: null,
+        loan: {},
         amount: 0.0,
         transactionDate: "May 31, 2020"
       }
     };
   },
   methods: {
+    changeLoan(loan) {
+      this.payment.loan = loan
+    }
   }
 };
 </script>
