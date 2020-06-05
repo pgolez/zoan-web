@@ -9,43 +9,45 @@
     :items="borrowerOptions"
     :rules="rules"
     outlined
-    @change="propagateChange">
-  </v-select>
+    @change="propagateChange"
+  ></v-select>
 </template>
 
 <script>
-import { BorrowerRepository } from '@/repositories/repository.js'
+import { BorrowerRepository } from "@/repositories/repository.js";
 
 export default {
   props: {
     rules: {
       type: Array,
-      default() { return [] }
+      default() {
+        return [];
+      }
     }
   },
   data() {
     return {
       borrowerId: null,
       borrowerOptions: []
-    }
+    };
   },
   created() {
-    this.populateBorrowerOptions()
+    this.populateBorrowerOptions();
   },
   methods: {
     async populateBorrowerOptions() {
       const borrowers = await BorrowerRepository.list();
-      this.borrowerOptions = borrowers.map( borrower => {
+      this.borrowerOptions = borrowers.map(borrower => {
         return {
           value: borrower.id,
           text: borrower.name
-        }
-      })
-      this.borrowerOptions = borrowers
+        };
+      });
+      this.borrowerOptions = borrowers;
     },
     propagateChange() {
-      this.$emit('change', this.borrowerId)
+      this.$emit("change", this.borrowerId);
     }
   }
-}
+};
 </script>

@@ -11,7 +11,8 @@
       <v-card-text>
         <v-form ref="form">
           <v-container>
-            <PayerSelect @change="changePayer" />
+
+            <LoanSelect />
 
             <v-text-field
               v-model="payment.amount"
@@ -21,6 +22,7 @@
               outlined
               required
             ></v-text-field>
+
             <v-text-field
               v-model="payment.transactionDate"
               label="Transaction Date"
@@ -28,6 +30,7 @@
               outlined
               required
             ></v-text-field>
+
           </v-container>
         </v-form>
       </v-card-text>
@@ -39,24 +42,23 @@
 </template>
 
 <script>
-import PayerSelect from "@/components/loan/LoanFormBorrowerSelect";
+import LoanSelect from "./PaymentFormLoanSelect";
 
 export default {
-  components: { PayerSelect },
+  components: {
+    LoanSelect
+  },
   data() {
     return {
       showDialog: false,
       payment: {
-        payerId: null,
+        loanId: null,
         amount: 0.0,
         transactionDate: "May 31, 2020"
       }
     };
   },
   methods: {
-    changePayer(payerId) {
-      this.payment.payerId = payerId;
-    }
   }
 };
 </script>
