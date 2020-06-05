@@ -23,30 +23,7 @@
               required
             ></v-text-field>
 
-            <v-dialog
-              ref="dialog"
-              v-model="modal"
-              :return-value.sync="payment.transactionDate"
-              persistent
-              width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="formattedTransactionDate"
-                  label="Picker in dialog"
-                  append-icon="mdi-calendar-today"
-                  required
-                  readonly
-                  outlined
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker v-model="payment.transactionDate" scrollable>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-                <v-btn text color="primary" @click="$refs.dialog.save(payment.transactionDate)">OK</v-btn>
-              </v-date-picker>
-            </v-dialog>
+            <TransactionDatePicker @change="changeTransactionDate"/>
 
           </v-container>
         </v-form>
@@ -60,11 +37,12 @@
 
 <script>
 import LoanSelect from "./PaymentFormLoanSelect";
-import moment from 'moment'
+import TransactionDatePicker from "./PaymentFormTransactionDate"
 
 export default {
   components: {
-    LoanSelect
+    LoanSelect,
+    TransactionDatePicker
   },
   data() {
     return {
@@ -72,19 +50,16 @@ export default {
       payment: {
         loan: {},
         amount: 0.0,
-        transactionDate: new Date().toISOString().substr(0, 10)
+        transactionDate: {}
       },
-      modal: false
     };
-  },
-  computed: {
-    formattedTransactionDate() {
-      return moment(this.payment.transactionDate).format('MMMM d, YYYY')
-    }
   },
   methods: {
     changeLoan(loan) {
       this.payment.loan = loan
+    },
+    changeTransactionDate(transactionDate) {
+      this.payment.transactionDate = transactionDate
     }
   }
 };
