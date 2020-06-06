@@ -8,7 +8,7 @@
   >
     <template v-slot:activator="{ on }">
       <v-text-field
-        v-model="formattedTransactionDate"
+        :value="formattedTransactionDate"
         label="Picker in dialog"
         append-icon="mdi-calendar-today"
         required

@@ -9,8 +9,14 @@
       :hide-default-footer="true"
       class="elevation-3">
 
-      <template v-slot:item.type="{ value }">
+      <template v-slot:top>
+        <v-toolbar flat color="white">
+          <v-spacer></v-spacer>
+          <CreateTransactionDialog />
+        </v-toolbar>
+      </template>
 
+      <template v-slot:item.type="{ value }">
         <v-avatar
           v-if="value=='CREDIT'"
           size="28"
@@ -52,7 +58,12 @@
 </template>
 
 <script>
+import CreateTransactionDialog from './CreateLoanerTransactionDialog'
+
 export default {
+  components: {
+    CreateTransactionDialog
+  },
   data() {
     return {
       headers: [
