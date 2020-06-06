@@ -4,6 +4,7 @@
     item-id="id"
     item-value="id"
     :items="loanOptions"
+    :rules="rules"
     v-model="loanId"
     @change="propagateSelectedLoan"
     outlined>
@@ -43,6 +44,14 @@
 import { LoanRepository } from "@/repositories/repository";
 
 export default {
+  props: {
+    rules: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
+  },
   data() {
     return {
       loans: [],
