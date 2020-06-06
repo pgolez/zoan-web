@@ -11,7 +11,9 @@
 
     <v-card>
       <v-card-title>
-        <span class="headline">{{ title }}</span>
+        <span class="headline">
+          {{ title }}
+        </span>
       </v-card-title>
 
       <v-card-text>
@@ -20,9 +22,16 @@
 
       <v-card-actions class="pb-6 pr-6">
         <v-spacer></v-spacer>
-        <v-btn outlined @click="close">Cancel</v-btn>
-        <v-btn color="primary"
-          @click="actionHandler">{{ actionText }}</v-btn>
+        <v-btn
+          outlined
+          @click="close">
+          Cancel
+        </v-btn>
+        <v-btn
+          color="primary"
+          @click="triggerActionHandler">
+          {{ actionText }}
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -62,6 +71,10 @@ export default {
       this.showDialog = false
       this.$emit('close')
     },
+    triggerActionHandler() {
+      this.actionHandler()
+      this.close()
+    }
   }
 }
 </script>
