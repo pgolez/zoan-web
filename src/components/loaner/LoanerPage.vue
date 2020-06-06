@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row dense>
-      <v-col :cols="6">
+      <v-col :cols="4">
           <LoanerTable />
       </v-col>
     </v-row>
