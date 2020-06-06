@@ -20,6 +20,10 @@
         <span class="text-right">{{value}}</span>
       </template>
 
+      <template v-slot:item.capital="{ item: loaner }">
+        <span>{{ totalCapital(loaner)|formatCurrency }}</span>
+      </template>
+
     </v-data-table>
   </v-card>
 </template>
@@ -36,12 +40,15 @@ export default {
     return {
       headers: [
         { text: "Name", sortable: true, value: "name" },
-        { text: "Amount in Loan", sortable: true, value: "amountLoaned" },
+        { text: "Total Capital", sortable: true, value: "capital" },
         { text: "Status", sortable: true, value: "status" },
       ]
     }
   },
   methods: {
+    totalCapital(loaner) {
+      return loaner.amountFree + loaner.amountLoaned
+    },
     handleItemSelected(event) {
       const isSelected = event.value
       if(isSelected) {

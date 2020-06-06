@@ -6,7 +6,7 @@
           :loaners="loaners"
           @loaner-selected="handleSelectedLoaner"/>
       </v-col>
-      <v-col v-if="showLoanerDetails" :cols="7">
+      <v-col v-show="showLoanerDetails" :cols="7">
         <LoanerDetails
           :loaner="selectedLoaner" />
       </v-col>
@@ -39,7 +39,6 @@ export default {
   },
   created() {
     this.fetchLoaners()
-    console.log("lodash", _)
   },
   methods: {
     async fetchLoaners() {
