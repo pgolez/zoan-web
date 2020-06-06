@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>Loaner</v-card-title>
+    <v-card-title>{{ loaner.name }}</v-card-title>
   </v-card>
 </template>
 
