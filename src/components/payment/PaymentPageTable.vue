@@ -1,7 +1,12 @@
 <template>
   <v-card>
     <v-card-title>Payments</v-card-title>
-    <v-data-table :headers="headers" :items="payments" class="elevation-1">
+    <v-data-table
+      :headers="headers"
+      :items="payments"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      class="elevation-1">
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-spacer></v-spacer>
@@ -48,6 +53,8 @@ export default {
   },
   data() {
     return {
+      sortBy: 'transactionDate',
+      sortDesc: true,
       headers: [
         { text: "Transaction Date", sortable: true, value: "transactionDate" },
         { text: "Payer", sortable: true, value: "payer.name" },
