@@ -11,6 +11,14 @@
       @item-selected="handleItemSelected"
       class="elevation-1">
 
+     <template v-slot:top>
+        <v-toolbar flat color="white">
+          <v-spacer></v-spacer>
+          <CreateLoanerDialog
+            @loaner-created="refreshLoaners"/>
+        </v-toolbar>
+      </template>
+
       <template v-slot:item.name="{ value }">
         <v-avatar color="orange darken-4" size="40" class="mr-2">
           <span class="white--text text-center headline">
@@ -21,7 +29,9 @@
       </template>
 
       <template v-slot:item.capital="{ item: loaner }">
-        <span>{{ totalCapital(loaner)|formatCurrency }}</span>
+        <div>
+          {{ totalCapital(loaner)|currency }}
+        </div>
       </template>
 
     </v-data-table>
@@ -29,7 +39,12 @@
 </template>
 
 <script>
+import CreateLoanerDialog from './CreateLoanerDialog'
+
 export default {
+  components: {
+    CreateLoanerDialog
+  },
   props: {
     loaners: {
       type: Array,
@@ -58,6 +73,9 @@ export default {
         this.$emit('loaner-selected', {})
       }
     },
+    refreshLoaners() {
+      this.$emit('loaner-created')
+    }
   }
 }
 </script>

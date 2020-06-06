@@ -32,7 +32,7 @@
       </template>
 
       <template v-slot:item.amount="{ value }">
-        <div class="text-right">{{ value|formatCurrency }}</div>
+        <div class="text-right">{{ value|currency }}</div>
       </template>
 
       <template v-slot:footer>
@@ -42,7 +42,7 @@
               <div class="font-weight-medium text-right">Total capital</div>
             </v-col>
             <v-col :cols="4" class="font-weight-bold text-right">
-                {{ totalCapital|formatCurrency }}
+                {{ totalCapital|currency }}
             </v-col>
           </v-row>
         </v-container>

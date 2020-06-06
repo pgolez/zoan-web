@@ -5,5 +5,5 @@ import currency from './currency'
 import acronym from './acronym'
 
 Vue.filter('formatDate', date);
-Vue.filter('formatCurrency', currency);
+Vue.filter('currency', currency);
 Vue.filter('acronym', acronym);

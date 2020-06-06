@@ -23,7 +23,7 @@
             </template>
 
             <template v-slot:item.amount="{ item }" class="text-right">
-              <span>{{ item.amount|formatCurrency(2) }}</span>
+              <span>{{ item.amount|currency(2) }}</span>
             </template>
 
             <template v-slot:item.paid_amount="{ item }">
@@ -34,7 +34,7 @@
 
             <template v-slot:item.installmentPayable="{ item }">
               <span>
-                {{ computeInstallmentPayable(item)|formatCurrency(2) }}
+                {{ computeInstallmentPayable(item)|currency(2) }}
               </span>
             </template>
 

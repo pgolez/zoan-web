@@ -1,10 +1,11 @@
 <template>
   <v-container fluid>
     <v-row dense>
-      <v-col :cols="showLoanerDetails ? 5 : 12">
+      <v-col :cols="5">
         <LoanerTable
           :loaners="loaners"
-          @loaner-selected="handleSelectedLoaner"/>
+          @loaner-selected="handleSelectedLoaner"
+          @loaner-created="refreshLoaners"/>
       </v-col>
       <v-col v-show="showLoanerDetails" :cols="7">
         <LoanerDetails
@@ -46,6 +47,9 @@ export default {
     },
     handleSelectedLoaner(loaner) {
       this.selectedLoaner = loaner
+    },
+    async refreshLoaners() {
+      await this.fetchLoaners()
     }
   }
 }
