@@ -12,7 +12,7 @@
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-spacer></v-spacer>
-          <CreateTransactionDialog />
+          <CreateTransactionDialog :loaner="loaner"/>
         </v-toolbar>
       </template>
 
@@ -63,6 +63,12 @@ import CreateTransactionDialog from './CreateLoanerTransactionDialog'
 export default {
   components: {
     CreateTransactionDialog
+  },
+  props:  {
+    loaner: {
+      type: Object,
+      required: false
+    }
   },
   data() {
     return {

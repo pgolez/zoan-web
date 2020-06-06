@@ -89,9 +89,16 @@ export default {
     Modal,
     TransactionDatePicker
   },
+  props:  {
+    loaner: {
+      type: Object,
+      required: false
+    }
+  },
   data() {
     return {
       transaction: {
+        loaner: this.loaner ? this.loaner : {},
         type: null,
         amount: 0.0,
         date: moment()

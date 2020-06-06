@@ -19,7 +19,8 @@
       <div>
         <v-row>
           <v-col :cols="6">
-            <TransactionsTable />
+            <TransactionsTable
+              :loaner="loaner"/>
           </v-col>
         </v-row>
       </div>
