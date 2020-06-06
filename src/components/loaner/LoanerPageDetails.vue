@@ -15,12 +15,26 @@
           </v-col>
         </v-row>
       </div>
+
+      <div>
+        <v-row>
+          <v-col :cols="6">
+            <TransactionsTable />
+          </v-col>
+        </v-row>
+      </div>
+
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+import TransactionsTable from './LoanerPageDetailTransactionTable'
+
 export default {
+  components: {
+    TransactionsTable
+  },
   props: {
     loaner: {
       type: Object,
