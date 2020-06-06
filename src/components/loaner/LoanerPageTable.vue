@@ -22,25 +22,20 @@
 </template>
 
 <script>
-import { LoanerRepository } from '@/repositories/repository'
-
 export default {
+  props: {
+    loaners: {
+      type: Array,
+      default() { return [] }
+    }
+  },
   data() {
     return {
       headers: [
         { text: "Name", sortable: true, value: "name" },
         { text: "Amount in Loan", sortable: true, value: "amountLoaned" },
         { text: "Status", sortable: true, value: "status" },
-      ],
-      loaners: []
-    }
-  },
-  created() {
-    this.fetchLoaners()
-  },
-  methods: {
-    async fetchLoaners() {
-      this.loaners = await LoanerRepository.list()
+      ]
     }
   }
 }
