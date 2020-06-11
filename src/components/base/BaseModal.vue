@@ -57,7 +57,7 @@ export default {
     },
     actionHandler: {
       type: Function,
-      default() { return () => true },
+      default() { return async () => true },
       required: false
     }
   },
@@ -71,8 +71,8 @@ export default {
       this.showDialog = false
       this.$emit('close')
     },
-    triggerActionHandler() {
-      const shouldClose = this.actionHandler()
+    async triggerActionHandler() {
+      const shouldClose = await this.actionHandler()
       if(shouldClose) {
         this.close()
       }

@@ -12,7 +12,9 @@
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-spacer></v-spacer>
-          <CreateTransactionDialog :loaner="loaner"/>
+          <CreateTransactionDialog
+            :loaner="loaner"
+            @transaction-posted="reloadTransactions"/>
         </v-toolbar>
       </template>
 
@@ -59,6 +61,7 @@
 
 <script>
 import CreateTransactionDialog from './CreateLoanerTransactionDialog'
+import { LoanerRepository } from '@/repositories/repository'
 
 export default {
   components: {
@@ -77,13 +80,7 @@ export default {
         { text: "Transaction Date", value: "transactionDate" },
         { text: "Amount", value: "amount", align: 'end'},
       ],
-      // TODO fetch real transactions
-      transactions: [
-        { transactionDate: "01-25-2020", amount: 10000, type: 'CREDIT' },
-        { transactionDate: "02-11-2020", amount: 5000, type: 'DEBIT' },
-        { transactionDate: "02-14-2020", amount: 10000, type: 'CREDIT' },
-        { transactionDate: "03-30-2020", amount: 10000, type: 'CREDIT' }
-      ]
+      transactions: []
     }
   },
   computed: {
@@ -95,6 +92,16 @@ export default {
           return sum - transaction.amount
         }
       }, 0)
+    }
+  },
+  watch: {
+    loaner() {
+      this.reloadTransactions()
+    }
+  },
+  methods: {
+    async reloadTransactions() {
+      this.transactions = await LoanerRepository.listTransactions(this.loaner)
     }
   }
 }

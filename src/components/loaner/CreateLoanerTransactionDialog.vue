@@ -119,10 +119,11 @@ export default {
     }
   },
   methods: {
-    save() {
+    async save() {
       if(this.$refs.form.validate()) {
-        submitForm(this.loaner, this.transaction)
+        await submitForm(this.loaner, this.transaction)
         this.resetForm();
+        this.$emit('transaction-posted')
         return true;
       }
       return false;
@@ -132,6 +133,11 @@ export default {
     },
     resetForm() {
       this.$refs.form.reset()
+      this.transaction = {
+        type: null,
+        amount: 0.0,
+        date: moment()
+      }
     }
   }
 }
