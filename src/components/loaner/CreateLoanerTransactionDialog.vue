@@ -83,6 +83,7 @@
 import moment from 'moment'
 import Modal from '@/components/base/BaseModal'
 import TransactionDatePicker from '@/components/payment/PaymentFormTransactionDate'
+import { LoanerRepository } from '@/repositories/repository'
 
 export default {
   components: {
@@ -98,7 +99,6 @@ export default {
   data() {
     return {
       transaction: {
-        loaner: this.loaner ? this.loaner : {},
         type: null,
         amount: 0.0,
         date: moment()
@@ -121,10 +121,11 @@ export default {
   methods: {
     save() {
       if(this.$refs.form.validate()) {
-        const transaction = { ... this.transaction }
+        submitForm(this.loaner, this.transaction)
         this.resetForm();
-        console.log('saving transaction', transaction)
+        return true;
       }
+      return false;
     },
     changeTransactionDate(transactionDate) {
       this.transaction.date = transactionDate
@@ -133,5 +134,16 @@ export default {
       this.$refs.form.reset()
     }
   }
+}
+
+async function submitForm(loaner, transaction) {
+  const requestBody = {
+    amount: Number.parseFloat(transaction.amount),
+    type: transaction.type,
+    transactionDate: transaction.date.format('MM-DD-YYYY'),
+    notes: null
+  }
+
+  await LoanerRepository.postTransaction(loaner, requestBody)
 }
 </script>
