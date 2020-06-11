@@ -16,6 +16,11 @@ export default {
         return savedLoaner;
     },
 
+    async listTransactions(loaner) {
+        const transactions = await client.get(`${BASE_URL}/${loaner.id}/equity/transactions`)
+        return transactions
+    },
+
     async postTransaction(loaner, transaction) {
         const data = _.pick(transaction, ['amount', 'type', 'transactionDate', 'notes'])
         const url = `${BASE_URL}/${loaner.id}/equity/transactions`
