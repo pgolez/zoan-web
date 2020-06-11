@@ -57,7 +57,7 @@ export default {
     },
     actionHandler: {
       type: Function,
-      default() { return () => {} },
+      default() { return () => true },
       required: false
     }
   },
@@ -72,8 +72,10 @@ export default {
       this.$emit('close')
     },
     triggerActionHandler() {
-      this.actionHandler()
-      this.close()
+      const shouldClose = this.actionHandler()
+      if(shouldClose) {
+        this.close()
+      }
     }
   }
 }
