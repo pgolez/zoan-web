@@ -81,7 +81,7 @@
 
 <script>
 import moment from 'moment'
-import Modal from '@/components/base/BaseModal'
+import Modal from '@/components/base/BaseDialog'
 import TransactionDatePicker from '@/components/payment/PaymentFormTransactionDate'
 import { LoanerRepository } from '@/repositories/repository'
 

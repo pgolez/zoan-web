@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <BaseModal
+    <BaseDialog
       activator-text="Activate Loan"
       title="Activate Loan"
       action-text="Save"
@@ -14,18 +14,18 @@
         </v-form>
       </template>
 
-    </BaseModal>
+    </BaseDialog>
   </v-row>
 </template>
 
 <script>
-import BaseModal from '@/components/base/BaseModal'
+import BaseDialog from '@/components/base/BaseDialog'
 import FundSelect from './LoanFormFundSelect'
 import { LoanRepository } from '@/repositories/repository'
 
 export default {
   components: {
-    BaseModal,
+    BaseDialog,
     FundSelect
   },
   props: {
