@@ -1,9 +1,11 @@
 <template>
-  <v-dialog v-model="showDialog" persistent max-width="500px">
+  <v-dialog
+    v-model="showDialog"
+    :max-width="width"
+    persistent>
     <template v-slot:activator="{ on }">
       <v-btn
         color="primary"
-        class="mb-2"
         dark
         v-on="on">
         {{ activatorText }}
@@ -41,6 +43,11 @@
 <script>
 export default {
   props: {
+    width: {
+      type: String,
+      default() { return '500px' },
+      required: false
+    },
     activatorText: {
       type: String,
       default() { return 'Open Modal' },
