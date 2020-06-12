@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="transactions"
+      :items="sortedTransactions"
       :disable-pagination="true"
       :disable-sort="true"
       :disable-filtering="true"
@@ -62,6 +62,7 @@
 <script>
 import CreateTransactionDialog from './CreateLoanerTransactionDialog'
 import { LoanerRepository } from '@/repositories/repository'
+import moment from 'moment'
 
 export default {
   components: {
@@ -92,6 +93,11 @@ export default {
           return sum - transaction.amount
         }
       }, 0)
+    },
+    sortedTransactions() {
+      return [...this.transactions].sort((a,b) => {
+        return -(moment(a.transactionDate).isSameOrAfter(b.transactionDate) ? 1 : -1)
+      })
     }
   },
   watch: {
