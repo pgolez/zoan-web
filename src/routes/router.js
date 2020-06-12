@@ -5,11 +5,13 @@ import VueRouter from 'vue-router'
 import PaymentPage from '@/components/payment/PaymentPage'
 import LoanPage from '@/components/loan/LoanPage'
 import LoanerPage from '@/components/loaner/LoanerPage'
+import ActivityPage from '@/components/activity/ActivityPage'
 
 const routes = [
     { path: '/payment', component: PaymentPage, name: 'payment-page' },
     { path: '/loan', component: LoanPage, name: 'loan-page' },
     { path: '/loaner', component: LoanerPage, name: 'loaner-page' },
+    { path: '/activity', component: ActivityPage, name: 'activity-page' },
 ]
 
 Vue.use(VueRouter)

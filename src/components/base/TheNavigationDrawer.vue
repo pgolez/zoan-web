@@ -29,6 +29,11 @@ export default {
           name: "Loaner",
           icon: "mdi-bank",
           route: "loaner-page"
+        },
+        {
+          name: "Activity",
+          icon: "mdi-calendar",
+          route: "activity-page"
         }
       ]
     };
