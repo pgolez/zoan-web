@@ -1,41 +1,31 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="500px">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          color="success"
-          v-on="on"
-          small>
-          Activate
-        </v-btn>
+    <BaseModal
+      activator-text="Activate Loan"
+      title="Activate Loan"
+      action-text="Save"
+      :action-handler="activateLoan">
+
+      <template v-slot:content>
+        <v-form ref="form">
+          <v-container>
+            <FundSelect @change="changeFund"></FundSelect>
+          </v-container>
+        </v-form>
       </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">Activate Loan</span>
-        </v-card-title>
-        <v-card-text>
-          <v-form ref="form">
-            <v-container>
-              <FundSelect @change="changeFund"></FundSelect>
-            </v-container>
-          </v-form>
-        </v-card-text>
-      <v-card-actions class="pb-6 pr-6">
-          <v-spacer></v-spacer>
-          <v-btn outlined text @click="cancel">Cancel</v-btn>
-          <v-btn color="primary" @click="activateLoan">Activate</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+
+    </BaseModal>
   </v-row>
 </template>
 
 <script>
+import BaseModal from '@/components/base/BaseModal'
 import FundSelect from './LoanFormFundSelect'
 import { LoanRepository } from '@/repositories/repository'
 
 export default {
   components: {
+    BaseModal,
     FundSelect
   },
   props: {

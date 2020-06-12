@@ -3,7 +3,8 @@
     <template v-slot:activator="{ on }">
       <v-btn
         color="primary"
-        dark class="mb-2"
+        class="mb-2"
+        dark
         v-on="on">
         {{ activatorText }}
       </v-btn>
