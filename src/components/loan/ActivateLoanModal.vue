@@ -57,9 +57,14 @@
           <v-row>
             <v-spacer></v-spacer>
             <v-col lg="6">
-              <v-form ref="form" class="float-right">
+              <v-form
+                ref="form"
+                class="float-right">
                 <v-container>
-                  <FundSelect @change="changeFund"></FundSelect>
+                  <FundSelect
+                    :rules="rules.fund"
+                    :loan="loan"
+                    @change="changeFund"/>
                 </v-container>
               </v-form>
             </v-col>
@@ -84,39 +89,36 @@ export default {
     PaymentScheduleTable
   },
   props: {
-    loan: {}
+    loan: {
+      type: Object,
+      default() { return null },
+      required: true
+    }
   },
   data() {
     return {
       dialog: false,
-      fundId: null,
+      loanerId: null,
       headers: [
         {text: "", value: "order"},
         {text: "Due Date", value: "dueDate"},
         {text: "Amount Payable", value: "amount"},
         {text: "Profit", value: "profit"},
-      ],
-      paymentSchedules: [
-        {dueDate: "06-15-2020", amount: 3100.0, profit: 600.0},
-        {dueDate: "06-30-2020", amount: 3100.0, profit: 600.0},
-        {dueDate: "07-15-2020", amount: 3100.0, profit: 600.0},
-        {dueDate: "07-30-2020", amount: 3100.0, profit: 600.0}
       ]
+    }
+  },
+  computed: {
+    rules() {
+      return {
+        fund: [
+          v => !!v || 'Source fund is required'
+        ]
+      }
     }
   },
   methods: {
     changeFund(id) {
       this.fundId = id
-    },
-    resetData() {
-      this.fundId = null
-    },
-    close() {
-      this.resetData();
-      this.dialog = false;
-    },
-    cancel() {
-      this.close()
     },
     async activateLoan() {
       if(this.$refs.form.validate()) {

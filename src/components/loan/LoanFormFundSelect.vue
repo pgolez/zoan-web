@@ -4,41 +4,50 @@
     label="Fund Source"
     placeholder="Select a fund source"
     item-value="id"
-    item-text="text"
-    :items="fundOptions"
+    item-text="name"
+    :items="loanerOptions"
+    :rules="rules"
     @change="propagateChange"
     outlined>
   </v-select>
 </template>
 
 <script>
-import { FundRepository } from '@/repositories/repository.js'
+import { LoanerRepository } from '@/repositories/repository.js'
 
 export default {
+  props: {
+    rules: {
+      type: Array,
+      default() { return [] },
+      required: false
+    },
+    loan: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      fundId: null,
-      fundOptions: []
+      loanerId: null,
+      loaners: []
+    }
+  },
+  computed: {
+    loanerOptions() {
+      return this.loaners.filter( (loaner) => loaner.amountFree >= this.loan.amount)
     }
   },
   created() {
-    this.populateFundOptions()
+    this.loadLoaners()
   },
   methods: {
-    async populateFundOptions() {
-      const funds = await FundRepository.list();
-      const availableFunds = funds.filter( fund => {
-        return fund.status === 'FREE'
-      })
-      this.fundOptions = availableFunds.map( fund => {
-        return {
-          id: fund.id,
-          text: `${fund.id} (${fund.totalAmount})`
-        }
-      })
+    async loadLoaners() {
+      const loaners = await LoanerRepository.list()
+      this.loaners = loaners
     },
     propagateChange() {
-      this.$emit('change', this.fundId)
+      this.$emit('change', this.loanerId)
     }
   }
 }
