@@ -2,7 +2,7 @@
   <v-row justify="center">
     <BaseDialog
       width="840px"
-      activator-text="Activate Loan"
+      activator-text="Activate"
       title="Activate Loan"
       action-text="Save"
       :action-handler="activateLoan">
@@ -49,24 +49,8 @@
             </v-col>
 
             <v-col lg="8">
-              <v-row>
-                <v-col>
-                  <h1>Payment Schedule</h1>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-data-table
-                    :headers="headers"
-                    :items="paymentSchedules"
-                    :disable-pagination="true"
-                    :disable-sort="true"
-                    :disable-filtering="true"
-                    :hide-default-footer="true"
-                    class="elevation-3">
-                  </v-data-table>
-                </v-col>
-              </v-row>
+              <PaymentScheduleTable
+                :loan="loan"/>
             </v-col>
           </v-row>
           <v-divider></v-divider>
@@ -91,11 +75,13 @@
 import BaseDialog from '@/components/base/BaseDialog'
 import FundSelect from './LoanFormFundSelect'
 import { LoanRepository } from '@/repositories/repository'
+import PaymentScheduleTable from './LoanFormPaymentScheduleTable'
 
 export default {
   components: {
     BaseDialog,
-    FundSelect
+    FundSelect,
+    PaymentScheduleTable
   },
   props: {
     loan: {}
