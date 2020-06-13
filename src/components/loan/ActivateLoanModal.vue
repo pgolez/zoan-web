@@ -5,7 +5,7 @@
       activator-text="Activate"
       title="Activate Loan"
       action-text="Save"
-      :action-handler="activateLoan">
+      :action-handler="submit">
 
       <template v-slot:content>
         <v-container fluid>
@@ -64,7 +64,7 @@
                   <FundSelect
                     :rules="rules.fund"
                     :loan="loan"
-                    @change="changeFund"/>
+                    @change="changeLoaner"/>
                 </v-container>
               </v-form>
             </v-col>
@@ -79,7 +79,7 @@
 <script>
 import BaseDialog from '@/components/base/BaseDialog'
 import FundSelect from './LoanFormFundSelect'
-import { LoanRepository } from '@/repositories/repository'
+import { FundRepository, LoanRepository } from '@/repositories/repository'
 import PaymentScheduleTable from './LoanFormPaymentScheduleTable'
 
 export default {
@@ -117,21 +117,14 @@ export default {
     }
   },
   methods: {
-    changeFund(id) {
-      this.fundId = id
+    changeLoaner(loaner) {
+      this.loaner = loaner
     },
-    async activateLoan() {
+    async submit() {
       if(this.$refs.form.validate()) {
-        const data = {
-          id: this.loan.id,
-          borrowerId: this.loan.borrower.id,
-          amount: this.loan.amount,
-          monthlyInterest: this.loan.monthlyInterest,
-          installmentCount: this.loan.installmentCount,
-          fundId: this.fundId
-        }
-        const loan = await LoanRepository.update(data)
-        const activatedLoan = await LoanRepository.activate(loan)
+        const fund = await createFundForLoan(this.loaner, this.loan)
+        const loan = await updateLoanFunds(this.loan, fund)
+        const activatedLoan = await activateLoan(loan)
         this.$emit('loan-activated', activatedLoan)
         return true
       }
@@ -139,5 +132,35 @@ export default {
       return false;
     }
   }
+}
+
+
+async function activateLoan(loan) {
+  return await LoanRepository.activate(loan)
+}
+
+async function createFundForLoan(loaner, loan) {
+  const fund = {
+    owners: [
+      {
+        loanerId: loaner.id,
+        amount: loan.amount
+      }
+    ]
+  }
+
+  return await FundRepository.create(fund)
+}
+
+async function updateLoanFunds(loan, fund) {
+  const data = {
+    id: loan.id,
+    borrowerId: loan.borrower.id,
+    amount: loan.amount,
+    monthlyInterest: loan.monthlyInterest,
+    installmentCount: loan.installmentCount,
+    fundId: fund.id
+  }
+  return await LoanRepository.update(data)
 }
 </script>

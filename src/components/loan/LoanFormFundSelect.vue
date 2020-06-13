@@ -1,6 +1,6 @@
 <template>
   <v-select
-    v-model="fundId"
+    v-model="loanerId"
     label="Fund Source"
     placeholder="Select a fund source"
     item-value="id"
@@ -47,7 +47,8 @@ export default {
       this.loaners = loaners
     },
     propagateChange() {
-      this.$emit('change', this.loanerId)
+      const loaner = this.loaners.find((loaner) => { return loaner.id == this.loanerId })
+      this.$emit('change', {...loaner})
     }
   }
 }
